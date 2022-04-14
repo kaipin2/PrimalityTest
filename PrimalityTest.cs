@@ -38,20 +38,19 @@ class PrimalityTest
         Number re = new Number(); //結果を格納する変数
         bool flag = false; //割り切れるか判定
         int divisor = 0; //割れる数
-
-        for (int i = 2; i <= num; i++)
+        int sqrt = (int)Math.Sqrt(num);
+        for (int i = 2; i <= sqrt; i++)
         {
             flag = false;
             if (i == 2)
             {
                 list.Add(i);
-                Console.WriteLine("Prime Number Add {0}", i);
+                //Console.WriteLine("Prime Number Add {0}", i);
             }
             else
             {
                 foreach (int prime in list)
                 {
-                    //Console.WriteLine("{0} {1}", i, prime);
                     if (i % prime == 0)
                     {
                         flag = true;
@@ -62,13 +61,25 @@ class PrimalityTest
                 if (!flag)
                 {
                     list.Add(i);
-                    Console.WriteLine("Prime Number Add {0}", i);
+                    //Console.WriteLine("Prime Number Add {0}", i);
                 }
             }
         }
+        flag = true;
+
+        foreach (int prime in list)
+        {
+            if (num % prime == 0)
+            {
+                flag = false;
+                divisor = prime;
+                break;
+            }
+        }
+
         //foreach (int x in list) Console.WriteLine("{0}", x);
         re.number = divisor;
-        re.prime = list.Contains(num);
+        re.prime = flag;
         return re;
     }
 }
