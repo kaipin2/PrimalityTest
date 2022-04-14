@@ -54,7 +54,6 @@ class PrimalityTest
                     if (i % prime == 0)
                     {
                         flag = true;
-                        divisor = prime;
                         break;
                     }
                 }
