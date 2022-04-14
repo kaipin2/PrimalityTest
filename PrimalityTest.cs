@@ -4,29 +4,42 @@ using System.Collections.Generic;
 
 class PrimalityTest
 {
+    public struct Number
+    {
+        public int number;
+        public bool prime;
+    }
     static void Main()
     {
         int number = 0;
-        bool result;
+        Number result = new Number();
         string prime_text = "素数です";
         string Noprime_text = "素数ではありません";
-        string text;
         List<int> PrimeNumber_list = new List<int>();
 
         Console.WriteLine("素数かどうか判定するプログラムを実行します");
         Console.Write("判定する数字：");
         number = int.Parse(System.Console.ReadLine());
         result = Judge(number, PrimeNumber_list);
-        text = result ? prime_text : Noprime_text;
-
-        Console.WriteLine(text);
+        if (result.prime)
+        {
+            Console.WriteLine(prime_text);
+        }
+        else
+        {
+            Console.WriteLine(Noprime_text);
+            Console.WriteLine("少なくとも{0}で割り切れます", result.number);
+        }
         Console.ReadKey();
     }
 
-    static bool Judge(int num, List<int> list)
+    static Number Judge(int num, List<int> list)
     {
+        Number re = new Number(); //結果を格納する変数
         bool flag = false; //割り切れるか判定
-        for (int i = 2; i < num + 1; i++)
+        int divisor = 0; //割れる数
+
+        for (int i = 2; i <= num; i++)
         {
             flag = false;
             if (i == 2)
@@ -39,7 +52,12 @@ class PrimalityTest
                 foreach (int prime in list)
                 {
                     //Console.WriteLine("{0} {1}", i, prime);
-                    if (i % prime == 0) flag = true;
+                    if (i % prime == 0)
+                    {
+                        flag = true;
+                        divisor = prime;
+                        break;
+                    }
                 }
                 if (!flag)
                 {
@@ -49,6 +67,8 @@ class PrimalityTest
             }
         }
         //foreach (int x in list) Console.WriteLine("{0}", x);
-        return list.Contains(num);
+        re.number = divisor;
+        re.prime = list.Contains(num);
+        return re;
     }
 }
